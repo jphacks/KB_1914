@@ -31,7 +31,7 @@
     </div>
     <div class="row hop">
       <img src="./assets/images/hop_blue.png" alt="ホップするバッタの">
-      <p class="col-12 col-md-9 offset-md-3"><span class="heading">メッセージを送信すると、近くのスマホをホップして広がってゆく</span></p>
+      <p class="col-12 col-md-9 offset-md-3"><span class="heading">メッセージを送信すると、近くの端末をホップして広がってゆく</span></p>
     </div>
     <div class="row flex-row-reverse commingin">
       <img class="col-12 col-md-5" src="./assets/images/commingin.png" alt="バッタが飛び込んでくるイラスト">
@@ -41,25 +41,31 @@
     </div>
   </section>
   <section class="container usage">
+    <h1 class="line">Usage</h1>
     <div class="row">
       <!-- アプリ画面 -->
-      <img class="col-12 col-md-4" src="./assets/images/screenshot.png" alt="">
+      <div class="col-12 col-md-4"><img src="./assets/images/screenshot.png" alt=""></div>
       <div class="col-12 col-md-8">
-        <p>アプリを開くと近くのメッセージが飛び込んでくる</p>
+        <p>アプリを開くと自動的に近くのメッセージが飛び込んでくる</p>
         <p>メッセージを送信すると、近くのユーザーに広がっていく</p>
         <p>メッセージは全て匿名</p>
       </div>
     </div>
     <div class="row">
       <!-- バッタが死ぬイラスト -->
-      <img class="col-12 col-md-4" src="./assets/images/screenshot.png" alt="">
+      <div class="col-12 col-md-4"><img class="dead-hopper" src="./assets/images/dead_hopper.png" alt=""></div>
       <div class="col-12 col-md-8">
-        <p>時間期限、hop数期限、距離期限がかけられており、いずれかが限度に達するとメッセージは破棄される</p>
+        <p>メッセージには３つの制限がかけられており、いずれかが限度に達するとメッセージは破棄される</p>
+        <ul>
+          <li>時間制限：投稿されてからの経過時間</li>
+          <li>ホップ数制限：端末から端末へ転送（ホップ）された回数</li>
+          <li>距離制限：メッセージが投稿された地点からの距離</li>
+        </ul>
       </div>
     </div>
     <div class="row">
       <!-- いいねしている画面 -->
-      <img class="col-12 col-md-4" src="./assets/images/screenshot.png" alt="">
+      <div class="col-12 col-md-4"><img src="./assets/images/screenshot.png" alt=""></div>
       <div class="col-12 col-md-8">
         <p>気に入ったメッセージをいいねしよう</p>
         <p>いいねされたメッセージは優先的にホップされ、より遠くまで広がります</p>
@@ -67,29 +73,34 @@
     </div>
     <div class="row">
       <!-- ホップマップを確認している画面 -->
-      <img class="col-12 col-md-4" src="./assets/images/screenshot.png" alt="">
+      <div class="col-12 col-md-4"><img src="./assets/images/screenshot.png" alt=""></div>
       <div class="col-12 col-md-8">
         <p>自分のメッセージがどこまで広がったか確認できます</p>
       </div>
     </div>
   </section>
   <section class="container whatsnew">
-    <h1>井戸端erだからできること</h1>
+    <h1 class="line">What's new?</h1>
+    <h3>井戸端erだからできること</h3>
     <ul>
       <li>今この瞬間、近くで発せられた「新鮮な」メッセージだけを表示</li>
       <li>店舗のタイムセールや路上ライブなどで、今近くにいる人にリーチできる</li>
       <li>匿名かつ期限で消えるので炎上しにくい、デジタルタトゥーになりにくい</li>
     </ul>
   </section>
-  <section class="container premium">
-    <h1>プレミアムプランでは次のようなサービスを検討しています</h1>
+  <section class="container plan">
+    <h1 class="line">Plan</h1>
+    <h3>プレミアムプランでは次のようなサービスを検討しています</h3>
     <ul>
-      <li>よりホップしやすいメッセージ</li>
+      <li>よりホップしやすいメッセージ、各種制限の緩和</li>
       <li>井戸端er上での店舗のクーポン券配布</li>
+      <li>etc...</li>
     </ul>
   </section>
-  <section>
-
+  <section class="container demo">
+    <h1 class="line">Demo</h1>
+    <iframe src="https://www.youtube.com/embed/DfLDp1cX0RU" frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </section>
 
   <!-- js読み込み -->

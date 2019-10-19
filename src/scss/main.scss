@@ -1,11 +1,16 @@
 $theme-color: #5c24fb !default;
 $white:#FAF7D9 !default;
 $orange: #DF984B !default;
+$pink: #C45C66  !default;
+$black: #283C5F !default;
+$green: #4AA9A4 !default;
+$lime: #C3CE5F !default;
 
 $breake-point:767px;
 
 body{
   background-color: $white;
+  color: $black;
 }
 
 img{
@@ -14,11 +19,29 @@ img{
 }
 
 section{
-  margin: 100px auto;
+  margin: 150px auto;
 }
 @media screen and (max-width:$breake-point){
   section{
     margin: 5% auto;
+  }
+}
+
+.line{
+  display: flex;
+  align-items: center;
+  &:before,&:after{
+    content: "";
+    flex-grow: 1;
+    height: 3px;
+    background: $theme-color;
+    display: block;
+  }
+  &:before{
+    margin-right: .4em;
+  }
+  &:after{
+    margin-left: .4em;
   }
 }
 
@@ -52,6 +75,9 @@ header{
     .main-logo{
       padding-top: 5%;
     }
+    h1{
+      font-size: 1.5rem;
+    }
     .main-text{
       margin-top: 7%;
       font-size: 7vw;
@@ -67,7 +93,6 @@ header{
     background: linear-gradient(transparent 70%, $orange 70%);
   }
   .gossip{
-    margin: 80px 0;
     &>div{
       display: flex;
       flex-direction: column;
@@ -75,14 +100,13 @@ header{
     }
   }
   .hop{
-    margin: 80px 0;
+    margin: 80px 0 0;
     &>p:nth-child(2){
       position: relative;
       top: -100px;
     }
   }
   .commingin{
-    margin: 80px 0;
     &>div{
       display: flex;
       align-items: center;
@@ -93,7 +117,7 @@ header{
 @media screen and (max-width:$breake-point){
   .content{
     .heading{
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
     .gossip{
       margin: 5% auto;
@@ -118,15 +142,99 @@ header{
 }
 
 .usage{
+  h1{
+    text-align: center;
+  }
   &>div{
     margin-top: 50px;
+    &>div:first-child{
+      display: flex;
+      align-items: center;
+    }
+    p{
+      font-size: 1.5rem;
+    }
+    ul{
+      font-size: 1.3rem;
+      list-style: none;
+    }
   }
 }
 
 @media screen and (max-width:$breake-point){
   .usage{
     &>div{
-      margin-top: 5%;
+      margin-top: 9%;
+      position: relative;
+      &:not(:last-child):after{
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        display: inline-block;
+        width: 80%;
+        height: 2px;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        background-color: $green;
+        border-radius: 2px;
+      }
+      p{
+        font-size: 1.1rem;
+      }
+      ul{
+        font-size: 1rem;
+      }
     }
+  }
+  .dead-hopper{
+    max-width: 80%;
+    margin: auto;
+  }
+}
+
+.whatsnew{
+  h1,h3{
+    text-align: center;
+  }
+  ul{
+    margin: 50px 0;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width:$breake-point){
+  .whatsnew{
+    ul{
+      margin: 5% 0;
+    }
+  }
+}
+
+.plan{
+  h1,h3{
+    text-align: center;
+  }
+  ul{
+    margin: 50px 0;
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width:$breake-point){
+  .plan{
+    ul{
+      margin: 5% 0;
+    }
+  }
+}
+
+.demo{
+  iframe{
+    display: block;
+    margin: 50px auto;
+    width: 560px;
+    max-width: 90%;
+    height: 340px;
   }
 }
