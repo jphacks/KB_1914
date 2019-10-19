@@ -1,0 +1,28 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateCoordinate($input: CreateCoordinateInput!) {
+  createCoordinate(input: $input) {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}
+mutation UpdateCoordinate($input: UpdateCoordinateInput!) {
+  updateCoordinate(input: $input) {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}
+mutation DeleteCoordinate($input: DeleteCoordinateInput!) {
+  deleteCoordinate(input: $input) {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}

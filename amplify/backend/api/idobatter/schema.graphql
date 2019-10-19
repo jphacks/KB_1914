@@ -1,0 +1,7 @@
+type Coordinate @model {
+  id: ID!
+  uuid: String!
+  lat: Float!
+  lng: Float!
+  time: Int!
+}

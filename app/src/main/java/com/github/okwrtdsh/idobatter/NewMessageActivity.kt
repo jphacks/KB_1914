@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_new_message.*
 
 class NewMessageActivity : AppCompatActivity() {
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_message)
 

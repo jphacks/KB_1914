@@ -2,23 +2,8 @@ package com.github.okwrtdsh.idobatter.room
 
 import android.content.Context
 import androidx.room.*
-import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import java.util.*
 
-
-//class Converters {
-//    @TypeConverter
-//    fun fromTimestamp(value: Long?) =
-//        if (value == null) null
-//        else Date(value)
-//
-//    @TypeConverter
-//    fun toTimestamp(date: Date?) = date?.time
-//}
-//
-//@TypeConverters(Converters::class)
 @Database(entities = arrayOf(Message::class), version = 1)
 abstract class MessageRoomDatabase : RoomDatabase() {
 

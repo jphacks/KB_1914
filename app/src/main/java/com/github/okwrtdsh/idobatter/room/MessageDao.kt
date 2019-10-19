@@ -10,7 +10,7 @@ import androidx.room.Query
 @Dao
 interface MessageDao {
 
-    @Query("SELECT * from message_table ORDER BY created ASC")
+    @Query("SELECT * from message_table ORDER BY created DESC")
     fun getAll(): LiveData<List<Message>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

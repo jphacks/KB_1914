@@ -2,9 +2,7 @@ package com.github.okwrtdsh.idobatter.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import java.util.*
 
 
 @Entity(tableName = "message_table")

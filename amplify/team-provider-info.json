@@ -1,0 +1,14 @@
+{
+    "idobatter": {
+        "awscloudformation": {
+            "AuthRoleName": "idobatter-idobatter-20191019173511-authRole",
+            "UnauthRoleArn": "arn:aws:iam::891010934550:role/idobatter-idobatter-20191019173511-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::891010934550:role/idobatter-idobatter-20191019173511-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "idobatter-idobatter-20191019173511-deployment",
+            "UnauthRoleName": "idobatter-idobatter-20191019173511-unauthRole",
+            "StackName": "idobatter-idobatter-20191019173511",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:891010934550:stack/idobatter-idobatter-20191019173511/5dd219b0-f24b-11e9-911b-06680f8688ee"
+        }
+    }
+}

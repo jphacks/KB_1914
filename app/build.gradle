@@ -65,4 +65,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+
+    // Amplify
+    //Base SDK
+    implementation 'com.amazonaws:aws-android-sdk-core:2.15.2'
+    //AppSync SDK
+    implementation 'com.amazonaws:aws-android-sdk-appsync:2.8.3'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
 }

@@ -1,0 +1,28 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateCoordinate {
+  onCreateCoordinate {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}
+subscription OnUpdateCoordinate {
+  onUpdateCoordinate {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}
+subscription OnDeleteCoordinate {
+  onDeleteCoordinate {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}

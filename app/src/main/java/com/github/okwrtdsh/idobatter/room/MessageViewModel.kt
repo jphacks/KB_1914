@@ -56,8 +56,9 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         Log.d("create", "call")
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
-                Log.d("create", "successListener")
                 if (location != null) {
+                    Log.d("create.addOnSuccessListener",
+                        "${location.latitude}, ${location.longitude}")
                     val message = Message(
                         UUID.randomUUID().toString(),
                         Date().time,
@@ -77,14 +78,14 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
                     }
                 }
                 else {
-                    Log.d("create", "no GPS")
+                    Log.d("create.addOnSuccessListener", "no GPS")
                 }
             }
             .addOnFailureListener {
-                Log.d("create", it.toString())
+                Log.d("create.addOnFailureListener", it.toString())
             }
             .addOnCanceledListener {
-                Log.d("create", "cancel")
+                Log.d("create.addOnCanceledListener", "Canceled")
             }
 
     }

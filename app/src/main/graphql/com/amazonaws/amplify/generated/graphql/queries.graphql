@@ -1,0 +1,26 @@
+# this is an auto generated file. This will be overwritten
+query GetCoordinate($id: ID!) {
+  getCoordinate(id: $id) {
+    id
+    uuid
+    lat
+    lng
+    time
+  }
+}
+query ListCoordinates(
+  $filter: ModelCoordinateFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCoordinates(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      uuid
+      lat
+      lng
+      time
+    }
+    nextToken
+  }
+}
