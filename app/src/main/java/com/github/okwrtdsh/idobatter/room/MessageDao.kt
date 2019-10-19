@@ -1,10 +1,7 @@
 package com.github.okwrtdsh.idobatter.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 
 @Dao
@@ -59,4 +56,11 @@ interface MessageDao {
         LIMIT :limit
         """)
     fun enabled(current_time: Long, current_lat: Double, current_lng: Double, limit: Int): List<Message>
+
+    @Query("SELECT * FROM message_table WHERE is_uploaded = 0 ORDER BY created ASC")
+    fun uploadable(): List<Message>
+
+    @Query("update message_table set is_uploaded = 1 where uuid = :uuid")
+    fun update(uuid: String)
+
 }

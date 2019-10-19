@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.amazonaws.appsync'
+
+
 android {
     compileSdkVersion 28
     defaultConfig {
