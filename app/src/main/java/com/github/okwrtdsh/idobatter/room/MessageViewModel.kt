@@ -1,12 +1,9 @@
 package com.github.okwrtdsh.idobatter.room
 
 import android.app.Application
-import android.location.Location
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -29,7 +26,7 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
 
     fun uploadable() = repository.uploadable()
 
-    fun update(uuid: String)= repository.update(uuid)
+    fun update(uuid: String) = repository.update(uuid)
 
 
     fun create(
@@ -41,42 +38,36 @@ class MessageViewModel(application: Application) : AndroidViewModel(application)
         limitDist: Int = 0,
         limitHops: Int = 0,
         limitTime: Int = 0,
-        fusedLocationClient: FusedLocationProviderClient
+        current_lat: Double = 0.0,
+        current_lng: Double = 0.0
     ) {
-        Log.d("create", "call")
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    Log.d("create.addOnSuccessListener",
-                        "${location.latitude}, ${location.longitude}")
-                    val message = Message(
-                        UUID.randomUUID().toString(),
-                        Date().time,
-                        content,
-                        location.latitude,
-                        location.longitude,
-                        hops,
-                        isFab,
-                        isAuther,
-                        isUploade,
-                        limitDist,
-                        limitHops,
-                        limitTime
-                    )
-                    viewModelScope.launch {
-                        repository.insert(message)
-                    }
-                }
-                else {
-                    Log.d("create.addOnSuccessListener", "no GPS")
-                }
-            }
-            .addOnFailureListener {
-                Log.d("create.addOnFailureListener", it.toString())
-            }
-            .addOnCanceledListener {
-                Log.d("create.addOnCanceledListener", "Canceled")
-            }
 
+        val message = Message(
+            UUID.randomUUID().toString(),
+            Date().time,
+            content,
+            current_lat,
+            current_lng,
+            hops,
+            isFab,
+            isAuther,
+            isUploade,
+            limitDist,
+            limitHops,
+            limitTime
+        )
+        viewModelScope.launch {
+            repository.insert(message)
+        }
     }
+
+//    fun enabled(
+//        // current_lat: Double, current_lng: Double, limit: Int = 10
+//    ) = repository.enabled(
+//        // current_lat, current_lng, limit
+//    )
+    fun enabled(f: (List<Message>)-> Unit) = viewModelScope.launch {
+        f(repository.enabled())
+    }
+
 }
