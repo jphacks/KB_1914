@@ -3,7 +3,15 @@ package com.github.okwrtdsh.idobatter
 import android.content.Context
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.amazonaws.amplify.generated.graphql.ListCoordinatesQuery
+import com.amazonaws.mobile.config.AWSConfiguration
+import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers
+import com.apollographql.apollo.GraphQLCall
+import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.exception.ApolloException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -18,6 +26,8 @@ import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
 
 
@@ -44,7 +54,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currentMarker: Marker? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mClusterManager: ClusterManager<MyItem>
-
+    private lateinit var targetUUID: String
+    private lateinit var mAWSAppSyncClient: AWSAppSyncClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +63,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
+        targetUUID = intent.getStringExtra("UUID")
+        Log.d("############", targetUUID)
+
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mAWSAppSyncClient = AWSAppSyncClient.builder()
+            .context(applicationContext)
+            .awsConfiguration(AWSConfiguration(applicationContext))
+            .build()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -90,21 +108,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         setCurrentMarker(latlng)
+        runQuery()
 
-        val rnd = Random
-        (1..100).map {
-            val ll = LatLng(
-                rnd.nextDoubleNorm(latlng.latitude, 0.5),
-                rnd.nextDoubleNorm(latlng.longitude)
-            )
-            mClusterManager.addItem(
-                MyItem(
-                    ll,
-                    "point",
-                    ll.toStr()
-                )
-            )
-        }
+//        val rnd = Random
+//        (1..100).map {
+//            val ll = LatLng(
+//                rnd.nextDoubleNorm(latlng.latitude, 0.5),
+//                rnd.nextDoubleNorm(latlng.longitude)
+//            )
+//            mClusterManager.addItem(
+//                MyItem(
+//                    ll,
+//                    "point",
+//                    ll.toStr()
+//                )
+//            )
+//        }
     }
 
     private fun setCurrentMarker(latlon: LatLng) {
@@ -117,6 +136,40 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlon, 14f))
+    }
+
+    fun runQuery() {
+        mAWSAppSyncClient.query(
+            ListCoordinatesQuery.builder()
+                .apply {
+                    limit(10000)
+                }
+                .build() // TODO: filtering
+        )
+            .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+            .enqueue(coordinatesCallback)
+    }
+
+    private val coordinatesCallback = object : GraphQLCall.Callback<ListCoordinatesQuery.Data>() {
+        override fun onResponse(response: Response<ListCoordinatesQuery.Data>) {
+            response.data()?.listCoordinates()?.items()?.map {
+                if (it.uuid() == targetUUID) {
+                    Log.d(">>>", "uuid: ${it.uuid()}")
+                    val ll = LatLng(it.lat(), it.lng())
+                    mClusterManager.addItem(
+                        MyItem(
+                            ll,
+                            SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Date(it.time().toLong())),
+                            ll.toStr()
+                        )
+                    )
+                }
+            }
+        }
+
+        override fun onFailure(e: ApolloException) {
+            Log.e("ERROR", e.toString())
+        }
     }
 }
 
