@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "expand-active-chapter",
+    "navigator",
+    "custom-favicon",
+    "insert-logo"
+  ],
+  "pluginsConfig": {
+    "favicon": "favicon.ico",
+    "insert-logo": {
+      "url": "images/LOGO_2.png",
+      "style": "background: none;"
+    }
+  }
+}
