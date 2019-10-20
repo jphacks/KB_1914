@@ -16,11 +16,11 @@ class NewMessageActivity : AppCompatActivity() {
 
         button_save.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(edit_word.text)) {
+            if (TextUtils.isEmpty(content.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             }
             else {
-                replyIntent.putExtra(EXTRA_REPLY, edit_word.text.toString())
+                replyIntent.putExtra(EXTRA_REPLY, content.text.toString())
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()

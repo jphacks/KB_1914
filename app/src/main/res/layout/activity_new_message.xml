@@ -7,18 +7,33 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/edit_word"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/big_padding"
         android:layout_marginBottom="@dimen/big_padding"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_word"
-        android:inputType="textAutoComplete"
         android:padding="@dimen/small_padding"
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:inputType="textMultiLine"
+        android:hint="@string/hint_word"
+        android:lines="3" />
+
+    <EditText
+        android:id="@+id/dist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_padding"
+        android:layout_marginBottom="@dimen/big_padding"
+        android:fontFamily="sans-serif-light"
+        android:padding="@dimen/small_padding"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:textSize="18sp"
+        android:inputType="number"
+        android:lines="3" />
 
     <Button
         android:id="@+id/button_save"

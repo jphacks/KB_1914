@@ -8,7 +8,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,12 +49,18 @@ class MessageListAdapter internal constructor(
     inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val messageItemView: TextView = itemView.findViewById(R.id.textView)
         val messageItemViewDate: TextView = itemView.findViewById(R.id.textViewDate)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val itemView = inflater.inflate(R.layout.recyclerview_item, parent, false)
-        return MessageViewHolder(itemView) // TODO: onclicklistener
+        val holder = MessageViewHolder(itemView)
+        holder.itemView.setOnClickListener {
+            val message = messages[holder.adapterPosition]
+            val intent = Intent(it.context, MapsActivity::class.java)
+            intent.putExtra("UUID", message.uuid)
+            it.context.startActivity(intent)
+        }
+        return holder
     }
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
@@ -68,7 +75,7 @@ class MessageListAdapter internal constructor(
         notifyDataSetChanged()
     }
 
-    override fun getItemCount() = messages.size
+    override fun getItemCount()= messages.size
 }
 
 
@@ -95,10 +102,12 @@ class MainActivity : AppCompatActivity() {
         private const val STATUS_IN_PROGRESS = 2
         private const val STATUS_READY = 3
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
 
         val adapter = MessageListAdapter(this)
         recyclerview.adapter = adapter
@@ -117,8 +126,7 @@ class MainActivity : AppCompatActivity() {
             if (isActive) {
                 startAdvertising()
                 startDiscovery()
-            }
-            else {
+            } else {
                 stopAdvertising()
                 stopDiscovery()
                 mConnectionsClient.stopAllEndpoints()
@@ -167,12 +175,12 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-        else {
+        } else {
             Toast.makeText(
                 applicationContext,
                 R.string.empty_not_saved,
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -181,6 +189,7 @@ class MainActivity : AppCompatActivity() {
             updateConnectionStatus()
             uploadCoordinateData()
         }
+
         override fun onLost(network: Network?) {
             updateConnectionStatus()
             uploadCoordinateData()
@@ -201,20 +210,21 @@ class MainActivity : AppCompatActivity() {
         if (isConnected) {
             val mutation = CreateCoordinateMutation.builder()
             if (messageViewModel.uploadable().map { message ->
-                mutation.input(
-                    CreateCoordinateInput.builder()
-                        .uuid(message.uuid)
-                        .lat(message.lat)
-                        .lng(message.lng)
-                        .time(message.created.toInt())
-                        .build()
-                )
-                message.isUploaded = true
-                messageViewModel.update(message.uuid)
-            }.isNotEmpty()) runMutate(mutation.build())
+                    mutation.input(
+                        CreateCoordinateInput.builder()
+                            .uuid(message.uuid)
+                            .lat(message.lat)
+                            .lng(message.lng)
+                            .time(message.created.toInt())
+                            .build()
+                    )
+                    message.isUploaded = true
+                    messageViewModel.update(message.uuid)
+                }.isNotEmpty()) runMutate(mutation.build())
         }
 
     }
+
     private fun runMutate(mutation: CreateCoordinateMutation) {
         mAWSAppSyncClient.mutate(mutation).enqueue(mutationCallback)
     }
@@ -342,31 +352,32 @@ class MainActivity : AppCompatActivity() {
                     mRemoteClientStatus = STATUS_IN_PROGRESS
 
                     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                            if (location != null) {
-                                Log.d("onConnectionResult.addOnSuccessListener",
-                                    "${location.latitude}, ${location.longitude}")
-                                messageViewModel.enabled { messages ->
-                                    sendString(
-                                        P2PData(
-                                            "MSG",
-                                            messages.toGsonString()
-                                        ).toGsonString()
-                                    )
-                                    sendString(P2PData("FIN", "").toGsonString())
-                                    mMyClientStatus = STATUS_DONE
-                                }
+                        if (location != null) {
+                            Log.d(
+                                "onConnectionResult.addOnSuccessListener",
+                                "${location.latitude}, ${location.longitude}"
+                            )
+                            messageViewModel.enabled { messages ->
+                                sendString(
+                                    P2PData(
+                                        "MSG",
+                                        messages.toGsonString()
+                                    ).toGsonString()
+                                )
+                                sendString(P2PData("FIN", "").toGsonString())
+                                mMyClientStatus = STATUS_DONE
+                            }
 
-                        }
-                        else {
+                        } else {
                             Log.d("onConnectionResult.addOnSuccessListener", "no GPS")
                         }
                     }
-                    .addOnFailureListener {
-                        Log.d("onConnectionResult.addOnFailureListener", it.toString())
-                    }
-                    .addOnCanceledListener {
-                        Log.d("onConnectionResult.addOnCanceledListener", "Canceled")
-                    }
+                        .addOnFailureListener {
+                            Log.d("onConnectionResult.addOnFailureListener", it.toString())
+                        }
+                        .addOnCanceledListener {
+                            Log.d("onConnectionResult.addOnCanceledListener", "Canceled")
+                        }
                 }
 
                 ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED -> {
@@ -404,19 +415,19 @@ class MainActivity : AppCompatActivity() {
                         if (location != null) {
                             communicationHandler(
                                 data.toString(Charsets.UTF_8).toP2PData(),
-                                location.latitude, location.longitude)
+                                location.latitude, location.longitude
+                            )
 
-                        }
-                        else {
+                        } else {
                             Log.d("onConnectionResult.addOnSuccessListener", "no GPS")
                         }
                     }
-                    .addOnFailureListener {
-                        Log.d("onConnectionResult.addOnFailureListener", it.toString())
-                    }
-                    .addOnCanceledListener {
-                        Log.d("onConnectionResult.addOnCanceledListener", "Canceled")
-                    }
+                        .addOnFailureListener {
+                            Log.d("onConnectionResult.addOnFailureListener", it.toString())
+                        }
+                        .addOnCanceledListener {
+                            Log.d("onConnectionResult.addOnCanceledListener", "Canceled")
+                        }
 
                 }
                 Payload.Type.FILE -> {
@@ -439,7 +450,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun communicationHandler(data: P2PData, current_lat: Double?, current_lng: Double?) {
-        when(data.type) {
+        when (data.type) {
             "MSG" -> {
                 data.body.toMessagesGson().messages.map {
                     messageViewModel.create(
