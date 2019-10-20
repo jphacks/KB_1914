@@ -2,7 +2,9 @@ package com.github.okwrtdsh.idobatter.room
 
 import android.content.Context
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Database(entities = arrayOf(Message::class), version = 1)
 abstract class MessageRoomDatabase : RoomDatabase() {
@@ -13,22 +15,22 @@ abstract class MessageRoomDatabase : RoomDatabase() {
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
-//        override fun onOpen(db: SupportSQLiteDatabase) {
-//            super.onOpen(db)
-//            INSTANCE?.let { database ->
-//                scope.launch {
-//                    var messageDao = database.messageDao()
-//
-//                    // Delete all content here.
-////                     messageDao.deleteAll()
-//
-////                    var mesage = Message("Hello")
-////                    messageDao.insert(mesage)
-////                    mesage = Message("World!")
-////                    messageDao.insert(mesage)
-//                }
-//            }
-//        }
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    var messageDao = database.messageDao()
+
+                    // Delete all content here.
+//                     messageDao.deleteAll()
+
+//                    var mesage = Message("Hello")
+//                    messageDao.insert(mesage)
+//                    mesage = Message("World!")
+//                    messageDao.insert(mesage)
+                }
+            }
+        }
     }
 
     companion object {

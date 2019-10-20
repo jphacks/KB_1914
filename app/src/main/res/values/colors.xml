@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#5c24fb</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ourPink">#C45C66</color>
     <color name="ourBlack">#283C5F</color>
-    <color name="ourWhite">#FAF7D9</color>
+    <color name="ourWhite">#C6FAF5D9</color>
     <color name="ourGreen">#4AA9A4</color>
     <color name="ourLime">#C3CE5F</color>
-    <color name="ourOrange">#DF984B</color>
+    <color name="ourOrange">#F7F6B6</color>
     <color name="ourOffWhite">#75FAF7D9</color>
 </resources>
 

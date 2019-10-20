@@ -3,7 +3,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ourBlack"
     android:orientation="vertical">
 
     <EditText
@@ -14,25 +13,12 @@
         android:layout_marginBottom="@dimen/big_padding"
         android:fontFamily="sans-serif-light"
         android:padding="@dimen/small_padding"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:gravity="top"
+        android:textColor="@color/ourBlack"
+        android:textColorHint="@color/ourBlack"
         android:textSize="18sp"
         android:inputType="textMultiLine"
         android:hint="@string/hint_word"
-        android:lines="3" />
-
-    <EditText
-        android:id="@+id/dist"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/big_padding"
-        android:layout_marginBottom="@dimen/big_padding"
-        android:fontFamily="sans-serif-light"
-        android:padding="@dimen/small_padding"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:textSize="18sp"
-        android:inputType="number"
         android:lines="3" />
 
     <Button
@@ -41,6 +27,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:background="@mipmap/ic_launcher_round"
-        android:textColor="@color/ourBlack" />
+        android:textColor="@color/ourBlack"
+        android:layout_marginTop="120dp"/>
 
 </LinearLayout>

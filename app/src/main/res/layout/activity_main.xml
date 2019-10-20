@@ -10,7 +10,6 @@
         android:id="@+id/recyclerview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/ourBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -24,19 +23,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:shadowColor="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="@+id/fab"
         app:layout_constraintStart_toStartOf="@+id/recyclerview" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_black_24dp"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/ourPink"
+        android:background="@mipmap/ic_launcher_round"
+        android:textColor="@color/ourBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
